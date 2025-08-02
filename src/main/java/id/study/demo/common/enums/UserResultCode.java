@@ -3,7 +3,7 @@ package id.study.demo.common.enums;
 import id.study.demo.common.enums.intf.ResultCode;
 import org.springframework.http.HttpStatus;
 
-public enum TodoResultCode implements ResultCode {
+public enum UserResultCode implements ResultCode {
     SUCCESS("SUCCESS", HttpStatus.OK, "Operation successful"),
     USERNAME_EXISTS("USERNAME_EXISTS", HttpStatus.BAD_REQUEST, "Username already exists"),
     EMAIL_EXISTS("EMAIL_EXISTS", HttpStatus.BAD_REQUEST, "Email already exists"),
@@ -14,7 +14,7 @@ public enum TodoResultCode implements ResultCode {
     private final HttpStatus status;
     private final String description;
 
-    TodoResultCode(String code, HttpStatus status, String description){
+    UserResultCode(String code, HttpStatus status, String description){
         this.code = code;
         this.status = status;
         this.description = description;
