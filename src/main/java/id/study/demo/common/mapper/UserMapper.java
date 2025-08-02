@@ -1,9 +1,9 @@
 package id.study.demo.common.mapper;
 
 import id.study.demo.common.model.dao.UserModel;
-import id.study.demo.common.model.dto.UserRequestDTO;
-import id.study.demo.common.model.dto.UserResponseDTO;
-import id.study.demo.common.model.vo.UserView;
+import id.study.demo.common.model.dto.users.UserRequestDTO;
+import id.study.demo.common.model.dto.users.UserResponseDTO;
+import id.study.demo.common.model.vo.users.UserView;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
