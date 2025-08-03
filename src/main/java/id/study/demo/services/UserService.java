@@ -1,7 +1,9 @@
 package id.study.demo.services;
 
 import id.study.demo.common.model.dto.users.UserRequestDTO;
+import id.study.demo.common.model.dto.users.UserResponseDTO;
 
 public interface UserService {
-    void registerUser(UserRequestDTO userRequestDTO);
+    UserResponseDTO findUser(String email);
+    UserResponseDTO registerUser(UserRequestDTO userRequestDTO);
 }
