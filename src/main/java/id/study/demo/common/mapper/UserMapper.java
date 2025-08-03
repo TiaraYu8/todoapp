@@ -10,12 +10,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
+    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
     @Mapping(target = "createdAt", ignore = true)
     UserModel toEntity(UserRequestDTO dto);
 
     UserResponseDTO toResponseDTO(UserModel entity);
 
-    @Mapping(target = "displayName", expression =  "java(\"@\" + dto.getUsername())")
-    UserView toVO (UserResponseDTO dto);
+    @Mapping(target = "displayName", expression = "java(\"@\" + dto.getUsername())")
+    UserView toVO(UserResponseDTO dto);
 }
