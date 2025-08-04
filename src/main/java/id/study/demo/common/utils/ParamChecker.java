@@ -45,6 +45,18 @@ public class ParamChecker {
         AssertUtil.isTrue(isValid, String.format("Value of '%s' is not valid", paramName));
     }
 
+    public static void minLength(String value, int minLength, String paramName) {
+        boolean isValid = value != null && value.length() >= minLength;
+        AssertUtil.isTrue(isValid,
+                String.format("parameter %s must be at least %d characters long", paramName, minLength));
+    }
+
+    public static void maxLength(String value, int maxLength, String paramName) {
+        boolean isValid = value != null && value.length() <= maxLength;
+        AssertUtil.isTrue(isValid,
+                String.format("parameter %s must not exceeded %d characters", paramName, maxLength));
+    }
+
     private ParamChecker() {
         // Prevent instantiation
     }

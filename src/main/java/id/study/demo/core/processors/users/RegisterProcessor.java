@@ -20,7 +20,10 @@ public class RegisterProcessor {
         ParamChecker.notEmpty(requestDTO.getEmail(),"email");
         ParamChecker.isEmail(requestDTO.getEmail(),"email");
         ParamChecker.notEmpty(requestDTO.getUsername(),"username");
+        ParamChecker.minLength(requestDTO.getUsername(),5, "username");
+        ParamChecker.maxLength(requestDTO.getUsername(),25, "username");
         ParamChecker.notEmpty(requestDTO.getPassword(), "password");
+        ParamChecker.minLength(requestDTO.getPassword(),8, "password");
 
         UserResponseDTO responseDTO = userService.registerUser(requestDTO);
 
