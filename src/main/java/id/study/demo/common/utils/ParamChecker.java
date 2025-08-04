@@ -1,5 +1,7 @@
 package id.study.demo.common.utils;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 /**
  * ParamChecker digunakan untuk validasi parameter request
  * dengan pesan error yang otomatis menyebut nama parameter.
@@ -36,6 +38,11 @@ public class ParamChecker {
      */
     public static void isExpected(boolean b, String paramName) {
         AssertUtil.isTrue(b, String.format("Value of '%s' is not valid", paramName));
+    }
+
+    public static void isEmail(String email, String paramName) {
+        boolean isValid = EmailValidator.getInstance().isValid(email);
+        AssertUtil.isTrue(isValid, String.format("Value of '%s' is not valid", paramName));
     }
 
     private ParamChecker() {

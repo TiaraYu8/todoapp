@@ -18,6 +18,7 @@ public class RegisterProcessor {
     public UserView process(UserRequestDTO requestDTO){
 
         ParamChecker.notEmpty(requestDTO.getEmail(),"email");
+        ParamChecker.isEmail(requestDTO.getEmail(),"email");
         ParamChecker.notEmpty(requestDTO.getUsername(),"username");
         ParamChecker.notEmpty(requestDTO.getPassword(), "password");
 
