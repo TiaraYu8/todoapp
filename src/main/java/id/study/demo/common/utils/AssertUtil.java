@@ -1,7 +1,7 @@
 package id.study.demo.common.utils;
 
 import com.nimbusds.oauth2.sdk.util.CollectionUtils;
-import id.study.demo.common.exception.ValidationException;
+import id.study.demo.common.exception.BadRequestException;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,7 +16,7 @@ public class AssertUtil {
      */
     public static void notNull(@Nullable Object o, String message) {
         if (o == null) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
         Objects.requireNonNull(o);
     }
@@ -27,7 +27,7 @@ public class AssertUtil {
      */
     public static void isNull(Object o, String message) {
         if (o != null) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
@@ -37,7 +37,7 @@ public class AssertUtil {
      */
     public static void isEmpty(Collection<?> collection, String message) {
         if (!CollectionUtils.isEmpty(collection)) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
@@ -47,7 +47,7 @@ public class AssertUtil {
      */
     public static void notEmpty(Collection<?> collection, String message) {
         if (CollectionUtils.isEmpty(collection)) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
@@ -57,7 +57,7 @@ public class AssertUtil {
      */
     public static void isEmpty(String s, String message) {
         if (StringUtils.isNotEmpty(s)) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
@@ -67,7 +67,7 @@ public class AssertUtil {
      */
     public static void notEmpty(String s, String message) {
         if (StringUtils.isEmpty(s)) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
@@ -77,7 +77,7 @@ public class AssertUtil {
      */
     public static void isTrue(boolean condition, String message) {
         if (!condition) {
-            throw new ValidationException(message);
+            throw new BadRequestException(message);
         }
     }
 
