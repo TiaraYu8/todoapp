@@ -22,23 +22,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponseDTO findUser(String email){
-        UserModel user = userRepository.findByEmail(email).
-                orElseThrow(() -> new NotFoundException("User Not Found"));
+    public Optional<UserResponseDTO> findUserByEmail(String email){
+        return userRepository.findByEmail(email)
+                .map(userMapper::toResponseDTO);
+    }
 
-        return userMapper.toResponseDTO(user);
+    @Override
+    public Optional<UserResponseDTO> findUserByUsername(String username){
+        return userRepository.findByUsername(username)
+                .map(userMapper::toResponseDTO);
     }
 
     @Override
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO){
-        AssertUtil.isTrue(
-                userRepository.findByEmail(userRequestDTO.getEmail()).isEmpty(),
-                "Email already in use"
-        );
-        AssertUtil.isTrue(
-                userRepository.findByUsername(userRequestDTO.getUsername()).isEmpty(),
-                "Username already in use"
-        );
 
         UserModel user = userMapper.toEntity(userRequestDTO);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
