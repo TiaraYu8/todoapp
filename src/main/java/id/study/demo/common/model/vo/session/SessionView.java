@@ -7,5 +7,4 @@ import lombok.Setter;
 @Getter
 public class SessionView {
     private String sessionToken;
-    private String userId;
 }

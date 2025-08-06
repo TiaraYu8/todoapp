@@ -2,18 +2,13 @@ package id.study.demo.services.impl;
 
 import id.study.demo.common.exception.NotFoundException;
 import id.study.demo.common.mapper.SessionMapper;
-import id.study.demo.common.mapper.UserMapper;
 import id.study.demo.common.model.dao.SessionModel;
-import id.study.demo.common.model.dao.UserModel;
-import id.study.demo.common.model.dto.session.SessionRequestDTO;
 import id.study.demo.common.model.dto.session.SessionResponseDTO;
-import id.study.demo.common.utils.AssertUtil;
 import id.study.demo.repository.SessionRepository;
-import id.study.demo.repository.UserRepository;
 import id.study.demo.services.SessionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -23,15 +18,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
     private final SessionMapper sessionMapper;
 
     @Override
-    public SessionResponseDTO createSession(SessionRequestDTO requestDTO, String userId){
-
-        Optional<UserModel> user = userRepository.findByEmail(requestDTO.getEmail());
-//        AssertUtil.isTrue(passwordEncoder.matches(requestDTO.getPassword(), user.));
+    public SessionResponseDTO createSession(String userId){
 
         SessionModel sessionModel = new SessionModel();
 
@@ -63,5 +53,13 @@ public class SessionServiceImpl implements SessionService {
         session.setExpired(false);
         session.setExpiredDate(LocalDateTime.now().plusDays(1));
         session.setUpdatedAt(LocalDateTime.now());
+    }
+
+    @Transactional
+    public void invalidateSession(String sessionId) {
+        Optional<SessionModel>sessionModel = sessionRepository.findByIdAndExpiredFalse(sessionId);
+
+        if(sessionModel.isPresent()) sessionRepository.invalidateSession(sessionId);
+        else throw new NotFoundException("Session already invalidate");
     }
 }

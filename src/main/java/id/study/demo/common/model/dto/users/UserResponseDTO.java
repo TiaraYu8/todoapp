@@ -12,5 +12,6 @@ public class UserResponseDTO extends BaseDTO {
     private String id;
     private String username;
     private String email;
+    private String password;
     private LocalDateTime createdAt;
 }

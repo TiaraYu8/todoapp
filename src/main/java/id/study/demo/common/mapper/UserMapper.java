@@ -17,6 +17,5 @@ public interface UserMapper {
     UserResponseDTO toResponseDTO(UserModel entity);
 
     @Mapping(target = "id", expression = "java(\"user-\" + dto.getId())")
-    @Mapping(target = "displayName", expression = "java(\"@\" + dto.getUsername())")
     UserView toVO(UserResponseDTO dto);
 }

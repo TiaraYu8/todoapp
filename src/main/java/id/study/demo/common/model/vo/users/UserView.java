@@ -8,5 +8,4 @@ import lombok.Setter;
 @Getter
 public class UserView extends BaseVO {
     private String id;
-    private String displayName;
 }

@@ -1,11 +1,9 @@
 package id.study.demo.services.impl;
 
-import id.study.demo.common.exception.NotFoundException;
 import id.study.demo.common.mapper.UserMapper;
 import id.study.demo.common.model.dao.UserModel;
 import id.study.demo.common.model.dto.users.UserRequestDTO;
 import id.study.demo.common.model.dto.users.UserResponseDTO;
-import id.study.demo.common.utils.AssertUtil;
 import id.study.demo.repository.UserRepository;
 import id.study.demo.services.UserService;
 import lombok.RequiredArgsConstructor;

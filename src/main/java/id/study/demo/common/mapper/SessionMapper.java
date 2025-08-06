@@ -10,6 +10,6 @@ import org.mapstruct.Mapping;
 public interface SessionMapper {
     SessionResponseDTO toResponseDTO(SessionModel entity);
 
-    @Mapping(target = "userId", expression = "java(\"user-\" + dto.getId())")
+    @Mapping(source = "id", target = "sessionToken")
     SessionView toVO(SessionResponseDTO dto);
 }
