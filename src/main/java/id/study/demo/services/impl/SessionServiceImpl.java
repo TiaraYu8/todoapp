@@ -28,9 +28,16 @@ public class SessionServiceImpl implements SessionService {
         sessionModel.setId(UUID.randomUUID().toString());
         sessionModel.setUserId(userId);
         sessionModel.setExpired(false);
-        sessionModel.setExpiredDate(LocalDateTime.now().plusDays(1));
         sessionModel.setCreatedAt(LocalDateTime.now());
         sessionModel.setUpdatedAt(LocalDateTime.now());
+        System.out.println("CreatedAt to be saved: " + LocalDateTime.now());
+
+
+        LocalDateTime expired = LocalDateTime.now().plusDays(1);
+        sessionModel.setExpiredDate(expired);
+        System.out.println("Expired to be saved: " + expired);
+
+
 
         SessionModel savedSession = sessionRepository.save(sessionModel);
 
@@ -53,6 +60,8 @@ public class SessionServiceImpl implements SessionService {
         session.setExpired(false);
         session.setExpiredDate(LocalDateTime.now().plusDays(1));
         session.setUpdatedAt(LocalDateTime.now());
+
+        sessionRepository.save(session);
     }
 
     @Transactional

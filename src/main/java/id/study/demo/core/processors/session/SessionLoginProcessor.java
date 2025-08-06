@@ -31,10 +31,6 @@ public class SessionLoginProcessor {
         Optional<UserResponseDTO> optionalUserResponseDTO = userService.findUserByEmail(requestDTO.getEmail());
         AssertUtil.notNull(optionalUserResponseDTO.orElse(null), "User Not Found");
 
-        System.out.println("ID user: " + optionalUserResponseDTO.get().getId());
-        System.out.println("Raw password: " + requestDTO.getPassword());
-        System.out.println("Stored hash: " + optionalUserResponseDTO.get().getPassword());
-
         AssertUtil.isTrue(passwordEncoder.matches(requestDTO.getPassword(), optionalUserResponseDTO.get().getPassword()), "Wrong Password");
 
         SessionResponseDTO sessionId = sessionService.createSession(optionalUserResponseDTO.get().getId());

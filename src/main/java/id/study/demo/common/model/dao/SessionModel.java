@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +29,6 @@ public class SessionModel {
     @Column(nullable = false)
     private Boolean expired;
 
-    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime expiredDate;
 
@@ -36,7 +36,7 @@ public class SessionModel {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(updatable = false)
     private LocalDateTime updatedAt;
 }

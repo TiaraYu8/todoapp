@@ -31,8 +31,10 @@ public class SessionController {
         return ProcessCallback.process(() -> loginProcessor.processor(requestDTO));
     }
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<Void>> sessionLogout(@RequestHeader("X-Session-Token") SessionLogoutRequestDTO requestDTO){
+    public ResponseEntity<ApiResponse<Void>> sessionLogout(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String sessionToken){
         return ProcessCallback.process(() -> {
+            SessionLogoutRequestDTO requestDTO = new SessionLogoutRequestDTO();
+            requestDTO.setSessionId(sessionToken);
             logoutProcessor.process(requestDTO);
             return null;
         });
@@ -40,8 +42,10 @@ public class SessionController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<ApiResponse<Void>> sessionCheck(@RequestHeader(value = HttpHeaders.AUTHORIZATION) SessionCheckRequestDTO requestDTO){
+    public ResponseEntity<ApiResponse<Void>> sessionCheck(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authToken){
         return ProcessCallback.process(() -> {
+            SessionCheckRequestDTO requestDTO = new SessionCheckRequestDTO();
+            requestDTO.setSessionId(authToken);
             checkProcessor.process(requestDTO);
             return null;
         });
