@@ -13,4 +13,6 @@ public interface SessionService {
     void prolongSession(String sessionId);
 
     void invalidateSession(String sessionId);
+
+    Optional<SessionResponseDTO> findSession(String sessionId);
 }

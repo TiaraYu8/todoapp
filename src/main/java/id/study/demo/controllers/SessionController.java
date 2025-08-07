@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/session")
@@ -27,27 +29,29 @@ public class SessionController {
     private final SessionCheckProcessor checkProcessor;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<SessionView>> sessionLogin(@RequestBody SessionRequestDTO requestDTO){
-        return ProcessCallback.process(() -> loginProcessor.processor(requestDTO));
+    public ResponseEntity<ApiResponse<Map<String, String>>> sessionLogin(@RequestBody SessionRequestDTO requestDTO){
+        return ProcessCallback.process(() -> {
+            String token = loginProcessor.processor(requestDTO);
+            return Map.of("sessionToken",token);
+        });
     }
+
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> sessionLogout(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String sessionToken){
-        return ProcessCallback.process(() -> {
+        return ProcessCallback.execute(() -> {
             SessionLogoutRequestDTO requestDTO = new SessionLogoutRequestDTO();
             requestDTO.setSessionId(sessionToken);
             logoutProcessor.process(requestDTO);
-            return null;
         });
 
     }
 
     @PostMapping("/check")
     public ResponseEntity<ApiResponse<Void>> sessionCheck(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authToken){
-        return ProcessCallback.process(() -> {
+        return ProcessCallback.execute(() -> {
             SessionCheckRequestDTO requestDTO = new SessionCheckRequestDTO();
             requestDTO.setSessionId(authToken);
             checkProcessor.process(requestDTO);
-            return null;
         });
 
     }

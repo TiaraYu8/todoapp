@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserResponseDTO> findUserById(String id){
+        return userRepository.findById(id)
+                .map(userMapper::toResponseDTO);
+    }
+
+    @Override
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO){
 
         UserModel user = userMapper.toEntity(userRequestDTO);

@@ -1,5 +1,6 @@
 package id.study.demo.common.wrapper;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 @Setter
@@ -10,8 +11,9 @@ import lombok.*;
 public class ApiResponse<T> {
     private String responseCode;
     private String responseMessage;
-    private T data;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T data;
     public static <T> ApiResponse<T> success(T data) {
         return ApiResponse.<T>builder()
                 .responseCode("SUCCESS")
@@ -24,7 +26,13 @@ public class ApiResponse<T> {
         return ApiResponse.<T>builder()
                 .responseCode(code)
                 .responseMessage(message)
-                .data(null)
+                .build();
+    }
+
+    public static ApiResponse<Void> success1() {
+        return ApiResponse.<Void>builder()
+                .responseCode("SUCCESS")
+                .responseMessage("SUCCESS")
                 .build();
     }
 }

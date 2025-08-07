@@ -10,4 +10,9 @@ public class ProcessCallback {
         T result = action.get();
         return ResponseEntity.ok(ApiResponse.success(result));
     }
+
+    public static ResponseEntity<ApiResponse<Void>> execute (Runnable action){
+        action.run();
+        return ResponseEntity.ok(ApiResponse.success1());
+    }
 }

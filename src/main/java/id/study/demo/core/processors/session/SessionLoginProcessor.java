@@ -23,7 +23,7 @@ public class SessionLoginProcessor {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public SessionView processor(SessionRequestDTO requestDTO){
+    public String processor(SessionRequestDTO requestDTO){
         ParamChecker.notEmpty(requestDTO.getEmail(), "email");
         ParamChecker.isEmail(requestDTO.getEmail(), "email");
         ParamChecker.notEmpty(requestDTO.getEmail(), "password");
@@ -35,6 +35,7 @@ public class SessionLoginProcessor {
 
         SessionResponseDTO sessionId = sessionService.createSession(optionalUserResponseDTO.get().getId());
 
-        return sessionMapper.toVO(sessionId);
+//        return sessionMapper.toVO(sessionId);
+        return sessionId.getId();
     }
 }

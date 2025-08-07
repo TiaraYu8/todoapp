@@ -51,6 +51,12 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public Optional<SessionResponseDTO> findSession(String sessionId){
+        return sessionRepository.findById(sessionId)
+                .map(sessionMapper::toResponseDTO);
+    }
+
+    @Override
     public void prolongSession(String sessionId){
         Optional<SessionModel> userActive = sessionRepository.findActiveSession(sessionId);
 
