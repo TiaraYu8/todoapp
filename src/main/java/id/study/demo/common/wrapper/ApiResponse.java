@@ -29,7 +29,7 @@ public class ApiResponse<T> {
                 .build();
     }
 
-    public static ApiResponse<Void> success1() {
+    public static ApiResponse<Void> success() {
         return ApiResponse.<Void>builder()
                 .responseCode("SUCCESS")
                 .responseMessage("SUCCESS")

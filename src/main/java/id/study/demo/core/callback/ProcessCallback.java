@@ -13,6 +13,6 @@ public class ProcessCallback {
 
     public static ResponseEntity<ApiResponse<Void>> execute (Runnable action){
         action.run();
-        return ResponseEntity.ok(ApiResponse.success1());
+        return ResponseEntity.ok(ApiResponse.success());
     }
 }
