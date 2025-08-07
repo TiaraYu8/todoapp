@@ -29,7 +29,7 @@ public class SecurityConfig {
     private static final String[] WHITELIST_URL = {
             "/session/login",
             "/session/check",
-            "users/register",
+            "/users/register",
            };
 
     @Bean
