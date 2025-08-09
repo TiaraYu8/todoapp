@@ -19,4 +19,6 @@ public interface SessionRepository extends JpaRepository<SessionModel, String> {
     Optional<SessionModel> findByIdAndExpiredFalse(String sessionId);
 
     Optional<SessionModel> findById(String id);
+
+    Optional<SessionModel> findUserIdById(String id);
 }

@@ -10,33 +10,42 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "sessions")
+@Table(name = "todo")
 @Setter
 @Getter
 @ToString
-public class SessionModel {
+public class TodoModel implements Serializable {
+    private static final long serialVersionUID = -2452540545116811713L;
 
     @Id
     @Column(updatable = false, nullable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String userId;
 
     @Column(nullable = false)
-    private Boolean expired;
+    private String title;
 
-    @Column(nullable = false)
-    private LocalDateTime expiredDate;
+    @Column
+    private String description;
+
+    @Column
+    private boolean completed;
+
+    @Column
+    private boolean deleted;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column
     private LocalDateTime updatedAt;
+
 }

@@ -15,4 +15,6 @@ public interface SessionService {
     void invalidateSession(String sessionId);
 
     Optional<SessionResponseDTO> findSession(String sessionId);
+
+    Optional<SessionResponseDTO> findUserId(String sessionId);
 }

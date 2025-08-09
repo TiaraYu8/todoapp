@@ -77,4 +77,10 @@ public class SessionServiceImpl implements SessionService {
         if(sessionModel.isPresent()) sessionRepository.invalidateSession(sessionId);
         else throw new NotFoundException("Session already invalidate");
     }
+
+    @Override
+    public Optional<SessionResponseDTO> findUserId(String sessionId){
+        return sessionRepository.findUserIdById(sessionId)
+                .map(sessionMapper::toResponseDTO);
+    }
 }
