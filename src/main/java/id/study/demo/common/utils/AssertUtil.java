@@ -1,12 +1,15 @@
 package id.study.demo.common.utils;
 
-import com.nimbusds.oauth2.sdk.util.CollectionUtils;
-import id.study.demo.common.exception.BadRequestException;
-import jakarta.annotation.Nullable;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Collection;
 import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.nimbusds.oauth2.sdk.util.CollectionUtils;
+
+import id.study.demo.common.exception.BadRequestException;
+import id.study.demo.common.exception.BusinessException;
+import jakarta.annotation.Nullable;
 
 public class AssertUtil {
 
@@ -16,7 +19,7 @@ public class AssertUtil {
      */
     public static void notNull(@Nullable Object o, String message) {
         if (o == null) {
-            throw new BadRequestException(message);
+            throw new BusinessException("PARAM_ILLEGAL", message);
         }
         Objects.requireNonNull(o);
     }
@@ -81,5 +84,6 @@ public class AssertUtil {
         }
     }
 
-    private AssertUtil() { }
+    private AssertUtil() {
+    }
 }

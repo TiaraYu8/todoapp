@@ -9,17 +9,20 @@ import id.study.demo.common.model.dto.session.SessionResponseDTO;
 import id.study.demo.common.model.dto.todos.TodoCreateRequestDTO;
 import id.study.demo.common.model.dto.todos.TodoResponseDTO;
 import id.study.demo.common.utils.ParamChecker;
+import id.study.demo.core.processors.ProcessorTemplate;
 import id.study.demo.services.SessionService;
 import id.study.demo.services.TodoService;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class TodoCreateProcessor {
+public class TodoCreateProcessors implements ProcessorTemplate<TodoCreateRequestDTO, String> {
     private final SessionService sessionService;
     private final TodoService    todoService;
 
-    public String process(String sessionToken, TodoCreateRequestDTO requestDTO) {
+    public String process(TodoCreateRequestDTO requestDTO) {
+        var sessionToken = requestDTO.getSessionToken();
+
         ParamChecker.notEmpty(requestDTO.getTitle(), "title");
         ParamChecker.notEmpty(requestDTO.getDescription(), "description");
 

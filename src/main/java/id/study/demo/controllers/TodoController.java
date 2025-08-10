@@ -1,11 +1,6 @@
 package id.study.demo.controllers;
 
-
-import id.study.demo.common.model.dto.todos.TodoCreateRequestDTO;
-import id.study.demo.common.wrapper.ApiResponse;
-import id.study.demo.core.callback.ProcessCallback;
-import id.study.demo.core.processors.todo.TodoCreateProcessor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,21 +9,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Map;
+import id.study.demo.common.model.dto.todos.TodoCreateRequestDTO;
+import id.study.demo.common.wrapper.ApiResponse;
+import id.study.demo.core.callback.ProcessCallbackSupport;
+import id.study.demo.core.callback.ProcessorCallback;
+import id.study.demo.core.processors.ProcessorTemplate;
+import id.study.demo.core.processors.todo.TodoCreateProcessors;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/task")
 public class TodoController {
-    private final TodoCreateProcessor todoCreateProcessor;
+    private final TodoCreateProcessors todoCreateProcessor;
+
+    @Autowired
+    public TodoController(TodoCreateProcessors todoCreateProcessor) {
+        this.todoCreateProcessor = todoCreateProcessor;
+    }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Map<String, String>>> todoCreate(
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token,
-            @RequestBody TodoCreateRequestDTO requestDTO){
-        return ProcessCallback.process(() -> {
-            String taskId = todoCreateProcessor.process(token, requestDTO);
-            return Map.of("taskId", taskId);
-        });
+    public ResponseEntity<ApiResponse<String>> todoCreate(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token,
+                                                          @RequestBody TodoCreateRequestDTO requestDTO) {
+        var result = ProcessCallbackSupport
+            .execute(new ProcessorCallback<TodoCreateRequestDTO, String>() {
+                @Override
+                public TodoCreateRequestDTO composeRequest() {
+                    requestDTO.setSessionToken(token);
+                    return requestDTO;
+                }
+
+                @Override
+                public ProcessorTemplate<TodoCreateRequestDTO, String> getProcessors() {
+                    return todoCreateProcessor;
+                }
+            });
+
+        return ResponseEntity.ok(result);
     }
 }
